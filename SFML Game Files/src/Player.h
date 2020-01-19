@@ -23,12 +23,13 @@ private:
 	Vector2u player_scale;
 	Vector2f player_pos;
 
-	Vector2f velocity;
+	/* Temporary veriable */
+	float groung_height = 400.0f;
 
+	Vector2f velocity;
 	const float movement_speed = 0.4f;
 	const float jump_speed = 1.5f;
-
-	//double progress{};
+	const float jump_height = 200.0f;
 	const float gravity = 0.01f;
 
 	bool faceRight = true;

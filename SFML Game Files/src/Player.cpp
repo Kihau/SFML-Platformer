@@ -74,21 +74,28 @@ void Player::HandleInputs(double dt)
 		faceRight = false;
 	}
 
-	if (Keyboard::isKeyPressed(Keyboard::Space))
+	if (Keyboard::isKeyPressed(Keyboard::Space) && can_jump)
 	{
 		velocity.y = -jump_speed;
-	}
 
-	if (player_pos.y < 450.0f || velocity.y < 0.0f) 
-		velocity.y += gravity;
-	else
+		// Checking if player reached jump limit
+		if (groung_height - player_pos.y > jump_height) can_jump = false;
+	}
+	else can_jump = false;
+
+	// Make jumps not pixel perfect (20p margin of error)
+
+	// Checking if player can fall
+	if (player_pos.y >= groung_height && velocity.y >= 0.0f)
 	{
 		velocity.y = 0.0f;
-		player_pos.y = 450.0f;
+		player_pos.y = groung_height;
 		player.setPosition(player_pos);
+
+		// Turning off auto jump using if statement
+		if (!Keyboard::isKeyPressed(Keyboard::Space)) can_jump = true;
 	}
-
-
+	else velocity.y += gravity;
 }
 
 void Player::DisplayAnimations(double dt)
