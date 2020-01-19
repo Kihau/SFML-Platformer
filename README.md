@@ -14,3 +14,4 @@ I'm trying to make simple SFML platformer game in C++
 - [x] Remove IR class from Player class 
 - [ ] Add jumpinng mechanics
 - [ ] Add and make collision detection class 
+- [ ] Make class player get inputs from game class
