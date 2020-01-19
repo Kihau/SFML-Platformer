@@ -15,3 +15,4 @@ I'm trying to make simple SFML platformer game in C++
 - [ ] Add jumpinng mechanics
 - [ ] Add and make collision detection class 
 - [ ] Make class player get inputs from game class
+- [ ] Make program read and initilialize configuration from config file

@@ -11,7 +11,7 @@ private:
 	Player* player;
 	
 	// SFML objects
-	RenderWindow window;
+	RenderWindow* window;
 	Clock timer;
 	Event event;
 
@@ -20,6 +20,7 @@ private:
 	double wait{};
 	time_t get_time{};
 	bool console{};
+	bool fullres{};
 
 	struct Input{
 		bool left{};
@@ -38,6 +39,8 @@ private:
 	void UpdateConsole();
 	void UpdateTimers();
 	void UpdateInputs();
+
+	void ChangeWindow();
 
 public:
 	// Constructor, destructor, game running function

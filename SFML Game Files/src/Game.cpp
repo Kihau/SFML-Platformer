@@ -2,7 +2,8 @@
 
 Game::Game(bool console) :event()
 {
-	window.create(VideoMode(800, 600), "test window", Style::Close | Style::Titlebar);
+    window = new RenderWindow(VideoMode(800, 600), "test window", Style::Close | Style::Titlebar);
+	//window.create(VideoMode(800, 600), "test window", Style::Close | Style::Titlebar);
     get_time = std::clock();
     //timer.restart();
     srand((unsigned)time(NULL));
@@ -17,11 +18,12 @@ Game::~Game()
 {
     delete player;
     delete res;
+    delete window;
 }
 
 void Game::Run()
 {
-	while (window.isOpen())
+	while (window->isOpen())
 	{
 		Update();
 		Render();
@@ -30,14 +32,14 @@ void Game::Run()
 
 void Game::Render()
 {
-    window.clear(Color(100, 100, 100, 0));
+    window->clear(Color(100, 100, 100, 0));
 
     // Rendering stuff here
         /*background*/
-    player->Render(window, deltaTime);
+    player->Render(*window, deltaTime);
         /*map*/
 
-    window.display();
+    window->display();
 }
 
 void Game::Update()
@@ -56,21 +58,20 @@ void Game::Update()
 
 void Game::UpdateEvents()
 {
-    while (window.pollEvent(event))
+    while (window->pollEvent(event))
     {
         switch (event.type)
         {
         case Event::Closed:
-            window.close();
+            window->close();
             break;
 
         case Event::KeyPressed:
             if (Keyboard::isKeyPressed(Keyboard::Escape))
-                window.close();
-
+                window->close();
+            if (Keyboard::isKeyPressed(Keyboard::F1))
+                ChangeWindow();
             break;
-
-        case Event::KeyReleased:
 
         default:
             break;
@@ -114,5 +115,17 @@ void Game::UpdateTimers()
     wait += (std::clock() - get_time);
     //get_time = 0;
     get_time = std::clock();
+}
+
+void Game::ChangeWindow()
+{
+    RenderWindow* window;
+    if (!fullres) window = new RenderWindow(VideoMode(1920, 1080), "test window", Style::Fullscreen);
+    else window = new RenderWindow(VideoMode(800, 600), "test window", Style::Close | Style::Titlebar);
+
+    fullres = !fullres;
+
+    delete[] this->window;
+    this->window = window;
 }
 
