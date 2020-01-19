@@ -36,7 +36,7 @@ void Game::Render()
 
     // Rendering stuff here
         /*background*/
-    player->Render(*window, deltaTime);
+    player->Render(window, deltaTime);
         /*map*/
 
     window->display();
@@ -94,19 +94,19 @@ void Game::UpdateInputs()
 void Game::UpdateConsole()
 {
 	cout << "Render time: " << deltaTime  << " seconds" << endl;
+
     cout << endl;
     player->UpdateConsole();
-
     cout << endl;
 
-    if (inp.right) cout << "Right key is pressed\n";
-    else cout << "Right key is NOT pressed\n";
+    if (inp.right) cout << "Right button is pressed\n";
+    else cout << "Right button is NOT pressed\n";
 
-    if (inp.left) cout << "Left key is pressed\n";
-    else cout << "Left key is NOT pressed\n";
+    if (inp.left) cout << "Left button is pressed\n";
+    else cout << "Left button is NOT pressed\n";
 
-    if (inp.jump) cout << "Jump key is pressed\n";
-    else cout << "Jump key is NOT pressed\n";
+    if (inp.jump) cout << "Jump button is pressed\n";
+    else cout << "Jump button is NOT pressed\n";
 }
 
 void Game::UpdateTimers()

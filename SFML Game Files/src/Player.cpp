@@ -54,6 +54,7 @@ void Player::HandleInputs(double dt)
 		{
 			player.setScale(1.0f, 1.0f);
 			player.move(-90.0f, 0.0f);
+			player_pos.x -= 90.0f;
 		}
 		else velocity.x += movement_speed;
 
@@ -66,6 +67,7 @@ void Player::HandleInputs(double dt)
 		{
 			player.setScale(-1.0f, 1.0f);
 			player.move(90.0f, 0.0f);
+			player_pos.x += 90.0f;
 		}
 		else velocity.x -= movement_speed;
 
@@ -74,16 +76,19 @@ void Player::HandleInputs(double dt)
 
 	if (Keyboard::isKeyPressed(Keyboard::Space))
 	{
-		if (velocity.y == 0.0f && can_jump)
-			velocity.y = -movement_speed;
+		velocity.y = -jump_speed;
 	}
 
-	if (!can_jump)
+	if (player_pos.y < 450.0f || velocity.y < 0.0f) 
+		velocity.y += gravity;
+	else
 	{
-		if (progress < jump_time) progress += dt;
-		else velocity.y += static_cast<float>(gravity * dt);
+		velocity.y = 0.0f;
+		player_pos.y = 450.0f;
+		player.setPosition(player_pos);
 	}
-	else velocity.y = 0.0f;
+
+
 }
 
 void Player::DisplayAnimations(double dt)
@@ -93,7 +98,7 @@ void Player::DisplayAnimations(double dt)
 }
 
 
-void Player::Render(RenderWindow& window, double dt)
+void Player::Render(RenderWindow* window, double dt)
 {
 	//if (PlayerIsWalking(dt)) walkAnim.Update(dt, true);
 	//else PlayerIsStanding(dt);
@@ -103,7 +108,7 @@ void Player::Render(RenderWindow& window, double dt)
 
 	player.move(velocity.x, velocity.y);
 	player_pos += velocity;
-	window.draw(player);
+	window->draw(player);
 }
 
 

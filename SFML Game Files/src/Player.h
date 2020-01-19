@@ -5,6 +5,7 @@
 
 class Player
 {
+	// CLEAR CLASS CODE!
 private:
 	// SFML objects
 	Sprite player;
@@ -23,10 +24,13 @@ private:
 	Vector2f player_pos;
 
 	Vector2f velocity;
-	float movement_speed = 0.4f;
-	const double jump_time = 0.3;
-	double progress{};
-	const double gravity = 1.1;
+
+	const float movement_speed = 0.4f;
+	const float jump_speed = 1.5f;
+
+	//double progress{};
+	const float gravity = 0.01f;
+
 	bool faceRight = true;
 	bool can_jump = true;
 
@@ -43,7 +47,7 @@ public:
 	// Constructor, destructor, main function
 	Player(InitResources& res);
 	~Player();
-	void Render(RenderWindow& window, double dt);
+	void Render(RenderWindow* window, double dt);
 	void UpdateConsole();
 };
 
