@@ -17,7 +17,8 @@ I'm trying to make simple SFML platformer game in C++
 	- [ ] Make jumps not pixel perfect (20p margin of error)
 	- [ ] Make (Majo2k) and add jumping animation
 - [ ] Make (Majo2k) and add program icon and change window title
-- [ ] Add and make collision detection class 
+- [x] Add and make collision detection class 
+	- [ ] Fix coll det class
 	- [ ] Add map class and map tile
 - [ ] ~~Make class player get inputs from game class~~
 - [ ] Make program read and initilialize configuration from config file

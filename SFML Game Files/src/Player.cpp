@@ -14,6 +14,7 @@ Player::Player(InitResources& res)
 
 	/* Temporary object */
 	tile.setTexture(res.tiles);
+
 }
 
 void Player::InitFrames()
@@ -76,27 +77,20 @@ void Player::HandleInputs(double dt)
 		velocity.y = -jump_speed;
 
 		// Checking if player reached jump limit
-		if (groung_height - player.getPosition().y > jump_height) can_jump = false;
+		if (tile.getGlobalBounds().top - player.getPosition().y > jump_height) can_jump = false;
 	}
 	else can_jump = false;
 }
 
 void Player::PlayerFall()
 {
-	hitbox.height = 95;
-	hitbox.width = 24;
-	hitbox.left = player.getGlobalBounds().left + 30;
-	hitbox.top = player.getGlobalBounds().top + 30;
+	UpdateHitboxes();
 
 	// Checking if player can fall
-	if (hitbox.intersects(tile.getGlobalBounds()) && velocity.y >= 0.0f)
+	if (coll.CheckCollision(hitbox, tile) && velocity.y >= 0.0f)
 	{
 		velocity.y = 0.0f;
-		//player.setPosition(player.getPosition().x, groung_height);
-		//FixPositionBottom(player, tile);
-		if (hitbox.top - hitbox.height <
-			tile.getGlobalBounds().top)
-			player.setPosition(player.getPosition().x, tile.getGlobalBounds().top - player.getGlobalBounds().height + 7);
+		coll.FixPosition(hitbox, player, tile);
 
 		// Turning off auto jump using if statement
 		if (!Keyboard::isKeyPressed(Keyboard::Space)) can_jump = true;
@@ -106,6 +100,14 @@ void Player::PlayerFall()
 		if (velocity.y < 10) velocity.y += gravity;
 		else velocity.y = 10.0f;
 	}
+}
+
+void Player::UpdateHitboxes()
+{
+	hitbox.height = 95;
+	hitbox.width = 24;
+	hitbox.left = player.getGlobalBounds().left + 30;
+	hitbox.top = player.getGlobalBounds().top + 30;
 }
 
 void Player::DisplayAnimations(double dt)

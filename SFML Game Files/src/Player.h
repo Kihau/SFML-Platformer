@@ -13,6 +13,7 @@ private:
 
 	// Program objects
 	InitResources& res;
+	Collision coll;
 
 	Animation standAnim;
 	Animation walkAnim;
@@ -45,6 +46,7 @@ private:
 	void HandleInputs(double dt);
 	void DisplayAnimations(double dt);
 	void PlayerFall();
+	void UpdateHitboxes();
 
 	// Delete later
 	void TempFunc(RenderWindow* window);
