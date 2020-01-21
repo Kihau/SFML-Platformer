@@ -19,6 +19,9 @@
     <Filter Include="Animation\Player">
       <UniqueIdentifier>{56605d11-e3c6-4028-865a-bf0eee10713c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Collision Detection">
+      <UniqueIdentifier>{c11c8e0a-99d5-463d-aa53-ef18314b6efa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="InitResources.h">
@@ -36,6 +39,9 @@
     <ClInclude Include="Player.h">
       <Filter>Animation\Player</Filter>
     </ClInclude>
+    <ClInclude Include="Collision.h">
+      <Filter>Collision Detection</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -52,6 +58,9 @@
     </ClCompile>
     <ClCompile Include="InitResources.cpp">
       <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision.cpp">
+      <Filter>Collision Detection</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -10,12 +10,14 @@ private:
 	// Textures default paths
 	const string
 		defenti = "../res/",
+		defmap = "../res/",
 		defback = "../res/";
 
 	bool console{};
 
 public:
 	Texture player;
+	Texture tiles;
 	//Sound testbuff;
 	//Font testfont;
 

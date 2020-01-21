@@ -5,16 +5,15 @@ Player::Player(InitResources& res)
 {
 	// Setting the player
 	player.setTexture(res.player);
-
-	player_pos.x = 300.0f;
-	player_pos.y = 200.0f;
-
-	player.setPosition(player_pos);
+	player.setPosition(300.0f, 200.0f);
 
 	velocity.x = 0.0;
 	velocity.y = 0.0;
 
 	InitFrames();
+
+	/* Temporary object */
+	tile.setTexture(res.tiles);
 }
 
 void Player::InitFrames()
@@ -54,7 +53,6 @@ void Player::HandleInputs(double dt)
 		{
 			player.setScale(1.0f, 1.0f);
 			player.move(-90.0f, 0.0f);
-			player_pos.x -= 90.0f;
 		}
 		else velocity.x += movement_speed;
 
@@ -67,7 +65,6 @@ void Player::HandleInputs(double dt)
 		{
 			player.setScale(-1.0f, 1.0f);
 			player.move(90.0f, 0.0f);
-			player_pos.x += 90.0f;
 		}
 		else velocity.x -= movement_speed;
 
@@ -79,23 +76,36 @@ void Player::HandleInputs(double dt)
 		velocity.y = -jump_speed;
 
 		// Checking if player reached jump limit
-		if (groung_height - player_pos.y > jump_height) can_jump = false;
+		if (groung_height - player.getPosition().y > jump_height) can_jump = false;
 	}
 	else can_jump = false;
+}
 
-	// Make jumps not pixel perfect (20p margin of error)
+void Player::PlayerFall()
+{
+	hitbox.height = 95;
+	hitbox.width = 24;
+	hitbox.left = player.getGlobalBounds().left + 30;
+	hitbox.top = player.getGlobalBounds().top + 30;
 
 	// Checking if player can fall
-	if (player_pos.y >= groung_height && velocity.y >= 0.0f)
+	if (hitbox.intersects(tile.getGlobalBounds()) && velocity.y >= 0.0f)
 	{
 		velocity.y = 0.0f;
-		player_pos.y = groung_height;
-		player.setPosition(player_pos);
+		//player.setPosition(player.getPosition().x, groung_height);
+		//FixPositionBottom(player, tile);
+		if (hitbox.top - hitbox.height <
+			tile.getGlobalBounds().top)
+			player.setPosition(player.getPosition().x, tile.getGlobalBounds().top - player.getGlobalBounds().height + 7);
 
 		// Turning off auto jump using if statement
 		if (!Keyboard::isKeyPressed(Keyboard::Space)) can_jump = true;
 	}
-	else velocity.y += gravity;
+	else
+	{
+		if (velocity.y < 10) velocity.y += gravity;
+		else velocity.y = 10.0f;
+	}
 }
 
 void Player::DisplayAnimations(double dt)
@@ -104,23 +114,69 @@ void Player::DisplayAnimations(double dt)
 	else if (velocity.x != 0.0f && velocity.y == 0.0f) walkAnim.Update(dt, true);
 }
 
-
 void Player::Render(RenderWindow* window, double dt)
 {
-	//if (PlayerIsWalking(dt)) walkAnim.Update(dt, true);
-	//else PlayerIsStanding(dt);
-
 	HandleInputs(dt);
+	PlayerFall();
 	DisplayAnimations(dt);
+	TempFunc(window);
 
 	player.move(velocity.x, velocity.y);
-	player_pos += velocity;
 	window->draw(player);
 }
 
-
-void Player::UpdateConsole()
+// This function is going to be deleted later
+void Player::TempFunc(RenderWindow *window)
 {
-	cout << "Player position x: " << player_pos.x << endl;
-	cout << "Player position y: " << player_pos.y << endl;
+	if (player.getPosition().x > 850) player.setPosition(-100.0f, player.getPosition().y);
+	if (player.getPosition().x < -100) player.setPosition(850.0f, player.getPosition().y);
+
+	if (player.getPosition().y > 700) player.setPosition(player.getPosition().x, -100.0f);
+	if (player.getPosition().y < -100) player.setPosition(player.getPosition().x, 700.0f);
+
+	/*
+	for (int i = -20; i < 5000; i += 210)
+	{
+		tile.setPosition(float(i), 534.f);
+		window->draw(tile);
+	}
+
+	for (int i = 0; i < 5000; i += 210)
+	{
+		tile.setPosition(float(i), 510.f);
+		window->draw(tile);
+	}
+	*/
+
+	tile.setPosition(250.0f, 410.f);
+	window->draw(tile);
+}
+
+
+void Player::Console()
+{
+	cout << "Player position x: " << player.getPosition().x << endl;
+	cout << "Player position y: " << player.getPosition().y << endl;
+
+	cout << "\nPlayer left: " << player.getGlobalBounds().left << endl;
+	cout << "Player top: " << player.getGlobalBounds().top << endl;
+	cout << "Player width: " << player.getGlobalBounds().width << endl;
+	cout << "Player hight: " << player.getGlobalBounds().height << endl;
+
+	cout << "\nPlayer velocity x: " << velocity.x << endl;
+	cout << "Player velocity y: " << velocity.y << endl;
+
+	cout << "\nHITBOX left: " << hitbox.left << endl;
+	cout << "HITBOX top: " << hitbox.top << endl;
+	cout << "HITBOX width: " << hitbox.width << endl;
+	cout << "HITBOX hight: " << hitbox.height << endl;
+	if (hitbox.intersects(tile.getGlobalBounds()))
+		cout << "COLLSISION!\n";
+	else cout << "NO\n";
+
+	cout << "\nTile left: " << tile.getGlobalBounds().left << endl;
+	cout << "Tile top: " << tile.getGlobalBounds().top << endl;
+	cout << "Tile width: " << tile.getGlobalBounds().width << endl;
+	cout << "Tile hight: " << tile.getGlobalBounds().height << endl;
+
 }

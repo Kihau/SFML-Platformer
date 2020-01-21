@@ -14,6 +14,7 @@ InitResources::InitResources(bool console) :hWnd()
 void InitResources::InitTextures()
 {
 	if (!player.loadFromFile(defenti + "player_actions.png")) ThrowExeption(L"player textures");
+	if (!tiles.loadFromFile(defmap + "ground_tilex7.png")) ThrowExeption(L"player map tiles");
 }
 
 void InitResources::InitSounds()

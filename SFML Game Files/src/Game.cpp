@@ -2,8 +2,7 @@
 
 Game::Game(bool console) :event()
 {
-    window = new RenderWindow(VideoMode(800, 600), "test window", Style::Close | Style::Titlebar);
-	//window.create(VideoMode(800, 600), "test window", Style::Close | Style::Titlebar);
+    window = new RenderWindow(VideoMode(800, 600), "SFML GAME", Style::Close | Style::Titlebar);
     get_time = std::clock();
     //timer.restart();
     srand((unsigned)time(NULL));
@@ -25,8 +24,8 @@ void Game::Run()
 {
 	while (window->isOpen())
 	{
-		Update();
 		Render();
+		Update();
 	}
 }
 
@@ -34,10 +33,10 @@ void Game::Render()
 {
     window->clear(Color(100, 100, 100, 0));
 
-    // Rendering stuff here
+    // Rendering stuff here (in correct order)
         /*background*/
-    player->Render(window, deltaTime);
         /*map*/
+    player->Render(window, deltaTime);
 
     window->display();
 }
@@ -52,8 +51,8 @@ void Game::Update()
         wait = {};
     }
     UpdateEvents();
-    UpdateTimers();
     UpdateInputs();
+    UpdateTimers();
 }
 
 void Game::UpdateEvents()
@@ -69,7 +68,7 @@ void Game::UpdateEvents()
         case Event::KeyPressed:
             if (Keyboard::isKeyPressed(Keyboard::Escape))
                 window->close();
-            if (Keyboard::isKeyPressed(Keyboard::F1))
+            else if (Keyboard::isKeyPressed(Keyboard::F1))
                 ChangeWindow();
             break;
 
@@ -96,7 +95,7 @@ void Game::UpdateConsole()
 	cout << "Render time: " << deltaTime  << " seconds" << endl;
 
     cout << endl;
-    player->UpdateConsole();
+    player->Console();
     cout << endl;
 
     if (inp.right) cout << "Right button is pressed\n";
@@ -120,8 +119,8 @@ void Game::UpdateTimers()
 void Game::ChangeWindow()
 {
     RenderWindow* window;
-    if (!fullres) window = new RenderWindow(VideoMode(1920, 1080), "test window", Style::Fullscreen);
-    else window = new RenderWindow(VideoMode(800, 600), "test window", Style::Close | Style::Titlebar);
+    if (!fullres) window = new RenderWindow(VideoMode(), "SFML GAME", Style::Fullscreen);
+    else window = new RenderWindow(VideoMode(800, 600), "SFML GAME", Style::Close | Style::Titlebar);
 
     fullres = !fullres;
 
