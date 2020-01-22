@@ -15,7 +15,7 @@ Player::Player(InitResources& res)
 	/* Temporary object */
 	tile.setTexture(res.tiles);
 
-	playerHitbox.CreateHitbox(78, 30, 36, 33);
+	playerHitbox.CreateHitbox(84, 36, 30, 30);
 
 	walkAnim.Update(display_speed, false);
 }
@@ -34,7 +34,7 @@ void Player::InitFrames()
 	}
 
 		// Adding jumping animation frames
-	jumpAnim.AddFrame({ IntRect(8 * width + 24, 0, width, height), display_speed });
+	jumpAnim.AddFrame({ IntRect(7 * width, 0, width, height), display_speed });
 	
 		// Adding dash animation frames
 	for (int i = 0; i <= NULL; i++)
@@ -93,11 +93,12 @@ void Player::HandleInputs(double dt)
 void Player::PlayerFall()
 {
 	playerHitbox.UpdateHitbox(player);
+
 	// Checking if player can fall
 	if (playerHitbox.CheckCollision(tile) && velocity.y >= 0.0f)
 	{
+		velocity.y = 0.0f; 
 		//playerHitbox.FixPosition(player, tile);
-		velocity.y = 0.0f;
 
 		// Turning off auto jump using if statement
 		if (!Keyboard::isKeyPressed(Keyboard::Space)) can_jump = true;
@@ -116,7 +117,7 @@ void Player::DisplayAnimations(double dt)
 	else jumpAnim.Update(dt, false);
 }
 
-void Player::Render(RenderWindow* window, double dt)
+void Player::Render(RenderWindow* window, double dt, bool console)
 {
 	HandleInputs(dt);
 	PlayerFall();
@@ -126,8 +127,11 @@ void Player::Render(RenderWindow* window, double dt)
 	player.move(velocity.x, velocity.y);
 	window->draw(player);
 
-	playerHitbox.ShowHitbox(window);
-	Collision::ShowHitbox(window, tile);
+	if (console)
+	{
+		playerHitbox.ShowHitbox(window);
+		Collision::ShowHitbox(window, tile);
+	}
 }
 
 // This function is going to be deleted later

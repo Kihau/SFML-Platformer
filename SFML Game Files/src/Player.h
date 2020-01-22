@@ -24,7 +24,7 @@ private:
 
 	// Class veriables
 	const int height = 114;
-	const int width = 84;
+	const int width = 96;
 	double display_speed = 0.1;
 	Vector2u player_scale;
 
@@ -54,7 +54,7 @@ public:
 	// Constructor, destructor, main function
 	Player(InitResources& res);
 	~Player();
-	void Render(RenderWindow* window, double dt);
+	void Render(RenderWindow* window, double dt, bool console);
 	void Console();
 };
 

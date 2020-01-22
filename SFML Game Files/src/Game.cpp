@@ -36,7 +36,7 @@ void Game::Render()
     // Rendering stuff here (in correct order)
         /*background*/
         /*map*/
-    player->Render(window, deltaTime);
+    player->Render(window, deltaTime, console);
 
     window->display();
 }
