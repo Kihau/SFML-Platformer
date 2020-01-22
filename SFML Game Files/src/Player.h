@@ -12,7 +12,7 @@ private:
 	Sprite tile;
 
 	// Program objects
-	InitResources& res;
+	InitResources& res; // do I need this?
 	Collision playerHitbox;
 	Collision tilehitbox;
 
@@ -29,10 +29,10 @@ private:
 	Vector2u player_scale;
 
 	Vector2f velocity;
-	const float movement_speed = 0.4f;
+	const float movement_speed = 0.001f;
 	const float jump_speed = 1.5f;
-	const float jump_height = 200.0f;
-	float jh{};
+	const float max_jump_height = 200.0f;
+	float jump_height{};
 	const float gravity = 0.01f;
 
 	bool faceRight = true;

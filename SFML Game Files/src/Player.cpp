@@ -81,12 +81,12 @@ void Player::HandleInputs(double dt)
 
 		// Checking if player reached jump limit
 		//if (player.getPosition().y < fabs(tile.getGlobalBounds().top - jump_height)) can_jump = false;
-		if (fabs(jh) >= jump_height)
+		if (fabs(jump_height) >= max_jump_height)
 		{
 			can_jump = false;
-			jh = 0.0f;
+			jump_height = 0.0f;
 		}
-		else jh -= velocity.y;
+		else jump_height -= velocity.y;
 	}
 	else can_jump = false;
 }
