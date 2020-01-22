@@ -5,30 +5,22 @@
 class Collision
 {
 private:
-	struct ver{
-		float left;
-		float right;
-		float bottom;
-		float top;
-		float width;
-		float height;
-	}h1, h2, s1, s2;
+	// gotta store hitboxes in vector soon
+	//vector <ver> sprites;
+	//vector <ver> hitboxes;
 
 	Rect <float> hitbox1;
-	Rect <float> hitbox2;
-	Sprite sprite1;
-	Sprite sprite2;
 
 private:
-	void UpdateH1(Rect <float> hitbox1);
-	void UpdateH2(Rect <float> hitbox2);
-	void UpdateS1(Sprite& sprite1);
-	void UpdateS2(Sprite& sprite2);
+	void UpdateHitbox1(Sprite& sprite1);
 
 public:
-	// HITBOX1 - SPRITE1
-	bool CheckCollision(Rect <float> hitbox1, Sprite& sprite1);
-	void FixPosition(Rect <float> hitbox1, Sprite& sprite1, Sprite& sprite2);
+	bool CheckCollision(Sprite& sprite1, Sprite& sprite2);
+	void FixPositionBottom(Sprite& sprite1, Sprite& sprite2);
+	void FixPositionRight(Sprite& sprite1, Sprite& sprite2);
+
+	void CreateHitbox1(float height, float width);
+	void UpdateConsole();
 };
 
 

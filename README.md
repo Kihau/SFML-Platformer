@@ -14,11 +14,12 @@ I'm trying to make simple SFML platformer game in C++
 	- [x] Remove IR class from Player class 
 - [x] Add jumpinng mechanics
 	- [x] Fix jumping mechanics 
-	- [ ] Make jumps not pixel perfect (20p margin of error)
+	- [ ] (???) Make jumps not pixel perfect (20p margin of error)
 	- [ ] Make (Majo2k) and add jumping animation
 - [ ] Make (Majo2k) and add program icon and change window title
 - [x] Add and make collision detection class 
-	- [ ] Fix coll det class
+	- [x] Fix hitboxes
+	- [ ] Fix collision detection
 	- [ ] Add map class and map tile
 - [ ] ~~Make class player get inputs from game class~~
 - [ ] Make program read and initilialize configuration from config file

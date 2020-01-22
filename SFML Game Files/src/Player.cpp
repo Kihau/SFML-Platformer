@@ -15,19 +15,22 @@ Player::Player(InitResources& res)
 	/* Temporary object */
 	tile.setTexture(res.tiles);
 
+	coll.CreateHitbox1(78, 30);
+
+	walkAnim.Update(display_speed, false);
 }
 
 void Player::InitFrames()
 {
 		// Adding standing animation frame
-	standAnim.AddFrame({IntRect(0, 0, 84, height), display_speed});
+	standAnim.AddFrame({IntRect(0, 0, width, height), display_speed});
 
 		// Adding walking animation frames
-	for (int i = 0; i <= 360; i += 72)
+	for (int i = 0; i < 504; i += width)
 	{
-		// Changing 2nd frame cuz animator is retarded
-		if (i == 0) walkAnim.AddFrame({ IntRect(i + 90 - 6, 0, width + 6, height), display_speed });
-		else walkAnim.AddFrame({ IntRect(i + 90, 0, width, height), display_speed });
+		walkAnim.AddFrame({ IntRect(i + width, 0, width, height), display_speed });
+		//if (i == 0) walkAnim.AddFrame({ IntRect(i + 90 - 6, 0, width + 6, height), display_speed });
+		//else walkAnim.AddFrame({ IntRect(i + 90, 0, width, height), display_speed });
 	}
 
 		// Adding jumping animation frames
@@ -84,13 +87,11 @@ void Player::HandleInputs(double dt)
 
 void Player::PlayerFall()
 {
-	UpdateHitboxes();
-
 	// Checking if player can fall
-	if (coll.CheckCollision(hitbox, tile) && velocity.y >= 0.0f)
+	if (coll.CheckCollision(player, tile) && velocity.y >= 0.0f)
 	{
 		velocity.y = 0.0f;
-		coll.FixPosition(hitbox, player, tile);
+		//coll.FixPositionBottom(player, tile);
 
 		// Turning off auto jump using if statement
 		if (!Keyboard::isKeyPressed(Keyboard::Space)) can_jump = true;
@@ -100,14 +101,6 @@ void Player::PlayerFall()
 		if (velocity.y < 10) velocity.y += gravity;
 		else velocity.y = 10.0f;
 	}
-}
-
-void Player::UpdateHitboxes()
-{
-	hitbox.height = 95;
-	hitbox.width = 24;
-	hitbox.left = player.getGlobalBounds().left + 30;
-	hitbox.top = player.getGlobalBounds().top + 30;
 }
 
 void Player::DisplayAnimations(double dt)
@@ -168,13 +161,7 @@ void Player::Console()
 	cout << "\nPlayer velocity x: " << velocity.x << endl;
 	cout << "Player velocity y: " << velocity.y << endl;
 
-	cout << "\nHITBOX left: " << hitbox.left << endl;
-	cout << "HITBOX top: " << hitbox.top << endl;
-	cout << "HITBOX width: " << hitbox.width << endl;
-	cout << "HITBOX hight: " << hitbox.height << endl;
-	if (hitbox.intersects(tile.getGlobalBounds()))
-		cout << "COLLSISION!\n";
-	else cout << "NO\n";
+	coll.UpdateConsole();
 
 	cout << "\nTile left: " << tile.getGlobalBounds().left << endl;
 	cout << "Tile top: " << tile.getGlobalBounds().top << endl;

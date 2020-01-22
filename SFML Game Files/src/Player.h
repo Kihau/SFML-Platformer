@@ -22,17 +22,12 @@ private:
 	Animation dashAnim;
 
 	// Class veriables
-	const int height = 102 + 13;
-	const int width = 72;
+	const int height = 114;
+	const int width = 84;
 	double display_speed = 0.1;
 	Vector2u player_scale;
 
-	/* Temporary veriable */
-	float groung_height = 400.0f;
-	Rect <float> hitbox;
-
 	Vector2f velocity;
-
 	const float movement_speed = 0.4f;
 	const float jump_speed = 1.5f;
 	const float jump_height = 200.0f;
@@ -46,7 +41,6 @@ private:
 	void HandleInputs(double dt);
 	void DisplayAnimations(double dt);
 	void PlayerFall();
-	void UpdateHitboxes();
 
 	// Delete later
 	void TempFunc(RenderWindow* window);
