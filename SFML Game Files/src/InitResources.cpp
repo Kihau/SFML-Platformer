@@ -15,6 +15,7 @@ void InitResources::InitTextures()
 {
 	if (!player.loadFromFile(defenti + "player_actions.png")) ThrowExeption(L"player textures");
 	if (!tiles.loadFromFile(defmap + "ground_tilex7.png")) ThrowExeption(L"player map tiles");
+	if (!icon.loadFromFile("../res/icon.png")) ThrowExeption(L"game icon lmao");
 }
 
 void InitResources::InitSounds()

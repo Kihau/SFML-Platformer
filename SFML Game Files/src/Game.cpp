@@ -10,6 +10,8 @@ Game::Game(bool console) :event()
     res = new InitResources(console);
     player = new Player(*res); 
 
+    window->setIcon(100, 100, res->icon.getPixelsPtr());
+
     this->console = console;
 }
 
@@ -121,6 +123,8 @@ void Game::ChangeWindow()
     RenderWindow* window;
     if (!fullres) window = new RenderWindow(VideoMode(), "SFML GAME", Style::Fullscreen);
     else window = new RenderWindow(VideoMode(800, 600), "SFML GAME", Style::Close | Style::Titlebar);
+
+    window->setIcon(100, 100, res->icon.getPixelsPtr());
 
     fullres = !fullres;
 

@@ -105,8 +105,8 @@ void Player::PlayerFall()
 	}
 	else
 	{
-		if (velocity.y < 10) velocity.y += gravity;
-		else velocity.y = 10.0f;
+		if (velocity.y < 3) velocity.y += gravity;
+		else velocity.y = 3.0f;
 	}
 }
 

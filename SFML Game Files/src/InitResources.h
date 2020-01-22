@@ -18,6 +18,7 @@ private:
 public:
 	Texture player;
 	Texture tiles;
+	Image icon;
 	//Sound testbuff;
 	//Font testfont;
 
