@@ -12,7 +12,7 @@ private:
 	Sprite tile;
 
 	// Program objects
-	InitResources& res;
+	InitResources& res; // do I need this?
 	Collision coll;
 
 	Animation standAnim;
