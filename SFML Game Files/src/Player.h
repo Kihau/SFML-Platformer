@@ -13,7 +13,8 @@ private:
 
 	// Program objects
 	InitResources& res;
-	Collision coll;
+	Collision playerHitbox;
+	Collision tilehitbox;
 
 	Animation standAnim;
 	Animation walkAnim;
@@ -31,6 +32,7 @@ private:
 	const float movement_speed = 0.4f;
 	const float jump_speed = 1.5f;
 	const float jump_height = 200.0f;
+	float jh{};
 	const float gravity = 0.01f;
 
 	bool faceRight = true;

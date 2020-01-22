@@ -5,21 +5,25 @@
 class Collision
 {
 private:
-	// gotta store hitboxes in vector soon
-	//vector <ver> sprites;
-	//vector <ver> hitboxes;
-
-	Rect <float> hitbox1;
-
-private:
-	void UpdateHitbox1(Sprite& sprite1);
+	RectangleShape hitbox;
+	float offset_down{};
+	float offset_right{};
 
 public:
-	bool CheckCollision(Sprite& sprite1, Sprite& sprite2);
-	void FixPositionBottom(Sprite& sprite1, Sprite& sprite2);
-	void FixPositionRight(Sprite& sprite1, Sprite& sprite2);
+	Collision();
+	Collision(float height, float width, float offset_down = 0.0f, float offset_right = 0.0f, Color color = Color::Green);
 
-	void CreateHitbox1(float height, float width);
+	void UpdateHitbox(Sprite& sprite);
+	void CreateHitbox(float height, float width, float offset_down = 0.0f, float offset_right = 0.0f, Color color = Color::Green);
+
+	bool CheckCollision(Collision& coll);
+	bool CheckCollision(Sprite& sprite);
+
+	void FixPosition(Sprite& sprite, Collision& coll);
+	void FixPosition(Sprite& sprite1, Sprite& sprite2);
+
+	void ShowHitbox(RenderWindow* window);
+	static void ShowHitbox(RenderWindow* window, Sprite& sprite, Color color = Color::Red);
 	void UpdateConsole();
 };
 

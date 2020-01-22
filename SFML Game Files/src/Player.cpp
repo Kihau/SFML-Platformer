@@ -15,7 +15,7 @@ Player::Player(InitResources& res)
 	/* Temporary object */
 	tile.setTexture(res.tiles);
 
-	coll.CreateHitbox1(78, 30);
+	playerHitbox.CreateHitbox(78, 30, 36, 33);
 
 	walkAnim.Update(display_speed, false);
 }
@@ -80,18 +80,25 @@ void Player::HandleInputs(double dt)
 		velocity.y = -jump_speed;
 
 		// Checking if player reached jump limit
-		if (tile.getGlobalBounds().top - player.getPosition().y > jump_height) can_jump = false;
+		//if (player.getPosition().y < fabs(tile.getGlobalBounds().top - jump_height)) can_jump = false;
+		if (fabs(jh) >= jump_height)
+		{
+			can_jump = false;
+			jh = 0.0f;
+		}
+		else jh -= velocity.y;
 	}
 	else can_jump = false;
 }
 
 void Player::PlayerFall()
 {
+	playerHitbox.UpdateHitbox(player);
 	// Checking if player can fall
-	if (coll.CheckCollision(player, tile) && velocity.y >= 0.0f)
+	if (playerHitbox.CheckCollision(tile) && velocity.y >= 0.0f)
 	{
+		//playerHitbox.FixPosition(player, tile);
 		velocity.y = 0.0f;
-		//coll.FixPositionBottom(player, tile);
 
 		// Turning off auto jump using if statement
 		if (!Keyboard::isKeyPressed(Keyboard::Space)) can_jump = true;
@@ -118,16 +125,34 @@ void Player::Render(RenderWindow* window, double dt)
 
 	player.move(velocity.x, velocity.y);
 	window->draw(player);
+
+	playerHitbox.ShowHitbox(window);
+	Collision::ShowHitbox(window, tile);
 }
 
 // This function is going to be deleted later
 void Player::TempFunc(RenderWindow *window)
 {
-	if (player.getPosition().x > 850) player.setPosition(-100.0f, player.getPosition().y);
-	if (player.getPosition().x < -100) player.setPosition(850.0f, player.getPosition().y);
+	if (window->getSize().x == 800 && window->getSize().y == 600)
+	{
+		if (player.getPosition().x > 900) player.setPosition(-100.0f, player.getPosition().y);
+		if (player.getPosition().x < -100) player.setPosition(900.0f, player.getPosition().y);
 
-	if (player.getPosition().y > 700) player.setPosition(player.getPosition().x, -100.0f);
-	if (player.getPosition().y < -100) player.setPosition(player.getPosition().x, 700.0f);
+		if (player.getPosition().y > 700) player.setPosition(player.getPosition().x, -100.0f);
+		if (player.getPosition().y < -100) player.setPosition(player.getPosition().x, 700.0f);
+		
+		tile.setPosition(250.0f, 410.f);
+	}
+	else
+	{
+		if (player.getPosition().x > 2080) player.setPosition(-100.0f, player.getPosition().y);
+		if (player.getPosition().x < -100) player.setPosition(2080.0f, player.getPosition().y);
+
+		if (player.getPosition().y > 1180) player.setPosition(player.getPosition().x, -100.0f);
+		if (player.getPosition().y < -100) player.setPosition(player.getPosition().x, 1180.0f);
+
+		tile.setPosition(250.0f, 910.f);
+	}
 
 	/*
 	for (int i = -20; i < 5000; i += 210)
@@ -143,7 +168,7 @@ void Player::TempFunc(RenderWindow *window)
 	}
 	*/
 
-	tile.setPosition(250.0f, 410.f);
+
 	window->draw(tile);
 }
 
@@ -161,7 +186,7 @@ void Player::Console()
 	cout << "\nPlayer velocity x: " << velocity.x << endl;
 	cout << "Player velocity y: " << velocity.y << endl;
 
-	coll.UpdateConsole();
+	playerHitbox.UpdateConsole();
 
 	cout << "\nTile left: " << tile.getGlobalBounds().left << endl;
 	cout << "Tile top: " << tile.getGlobalBounds().top << endl;

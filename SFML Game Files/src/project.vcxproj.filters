@@ -22,6 +22,9 @@
     <Filter Include="Collision Detection">
       <UniqueIdentifier>{c11c8e0a-99d5-463d-aa53-ef18314b6efa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Map">
+      <UniqueIdentifier>{574509a5-31c6-4af0-b6cc-cf59b1af3c71}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="InitResources.h">
@@ -42,6 +45,9 @@
     <ClInclude Include="Collision.h">
       <Filter>Collision Detection</Filter>
     </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>Map</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -61,6 +67,9 @@
     </ClCompile>
     <ClCompile Include="Collision.cpp">
       <Filter>Collision Detection</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>Map</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
