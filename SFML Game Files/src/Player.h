@@ -29,7 +29,7 @@ private:
 	Vector2u player_scale;
 
 	Vector2f velocity;
-	const float movement_speed = 0.001f;
+	const float movement_speed = 0.4f;
 	const float jump_speed = 1.5f;
 	const float max_jump_height = 200.0f;
 	float jump_height{};

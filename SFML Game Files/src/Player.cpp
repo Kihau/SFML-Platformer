@@ -34,8 +34,7 @@ void Player::InitFrames()
 	}
 
 		// Adding jumping animation frames
-	for (int i = 0; i <= NULL; i++)
-		jumpAnim.AddFrame({ IntRect(2, i, width, height), NULL });
+	jumpAnim.AddFrame({ IntRect(8 * width + 24, 0, width, height), display_speed });
 	
 		// Adding dash animation frames
 	for (int i = 0; i <= NULL; i++)
@@ -114,6 +113,7 @@ void Player::DisplayAnimations(double dt)
 {
 	if (velocity.x == 0.0f && velocity.y == 0.0f) standAnim.Update(dt, false);
 	else if (velocity.x != 0.0f && velocity.y == 0.0f) walkAnim.Update(dt, true);
+	else jumpAnim.Update(dt, false);
 }
 
 void Player::Render(RenderWindow* window, double dt)
