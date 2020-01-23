@@ -72,8 +72,8 @@ void Collision::ShowHitbox(RenderWindow* window, Sprite& sprite, Color color)
 bool Collision::FixPositionBottom(Sprite& sprite1, Sprite& sprite2)
 {		
 	if (hitbox.getGlobalBounds().top + hitbox.getGlobalBounds().height > sprite2.getGlobalBounds().top
-		&& hitbox.getGlobalBounds().left > sprite2.getGlobalBounds().left
-		&& hitbox.getGlobalBounds().left + hitbox.getGlobalBounds().width < sprite2.getGlobalBounds().left + sprite2.getGlobalBounds().width
+		/*&& hitbox.getGlobalBounds().left > sprite2.getGlobalBounds().left
+		&& hitbox.getGlobalBounds().left + hitbox.getGlobalBounds().width < sprite2.getGlobalBounds().left + sprite2.getGlobalBounds().width*/
 		&& hitbox.getGlobalBounds().top < sprite2.getGlobalBounds().top)
 	{
 		sprite1.setPosition(sprite1.getPosition().x, sprite2.getGlobalBounds().top - sprite1.getGlobalBounds().height + 5);
@@ -95,12 +95,23 @@ bool Collision::FixPositionTop(Sprite& sprite1, Sprite& sprite2)
 	else return false;
 }
 
-bool Collision::FixPositionRight(Sprite& sprite1, Sprite& sprite2)
+bool Collision::FixPositionLeftRight(Sprite& sprite1, Sprite& sprite2)
 {
-	return false;
-}
-
-bool Collision::FixPositionLeft(Sprite& sprite1, Sprite& sprite2)
-{
-	return false;
+	if (hitbox.getGlobalBounds().left + hitbox.getGlobalBounds().width > sprite2.getGlobalBounds().left + sprite2.getGlobalBounds().width
+		&& hitbox.getGlobalBounds().left < sprite1.getGlobalBounds().left + sprite2.getGlobalBounds().width
+		&& hitbox.getGlobalBounds().top + hitbox.getGlobalBounds().height > sprite2.getGlobalBounds().top + 5
+		&& hitbox.getGlobalBounds().top < sprite2.getGlobalBounds().top + sprite2.getGlobalBounds().height - 1)
+	{
+		sprite1.setPosition(sprite2.getGlobalBounds().left + sprite2.getGlobalBounds().width - offset_right + sprite1.getGlobalBounds().width, sprite1.getPosition().y);
+		return true;
+	}
+	else if (hitbox.getGlobalBounds().left < sprite2.getGlobalBounds().left
+		&& hitbox.getGlobalBounds().left + hitbox.getGlobalBounds().width > sprite1.getGlobalBounds().left
+		&& hitbox.getGlobalBounds().top + hitbox.getGlobalBounds().height > sprite2.getGlobalBounds().top + 5
+		&& hitbox.getGlobalBounds().top < sprite2.getGlobalBounds().top + sprite2.getGlobalBounds().height - 1)
+	{
+		sprite1.setPosition(sprite2.getGlobalBounds().left - sprite1.getGlobalBounds().width + offset_right, sprite1.getPosition().y);
+		return true;
+	}
+	else return false;
 }

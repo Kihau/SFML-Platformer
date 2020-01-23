@@ -90,29 +90,35 @@ void Player::HandleInputs(double dt)
 	else can_jump = false;
 }
 
-void Player::PlayerFall()
+void Player::CollisionAndFall()
 {
 	playerHitbox.UpdateHitbox(player);
 
 	if (playerHitbox.CheckCollision(tile))
 	{
-		if (playerHitbox.FixPositionTop(player, tile))
-			velocity.y = 0.0f;
+		if (!playerHitbox.FixPositionLeftRight(player, tile))
+		{
+			if (playerHitbox.FixPositionTop(player, tile))
+				velocity.y = 0.0f;
+		}
 	}
 
 	// Checking if player can fall
 	if (playerHitbox.CheckCollision(tile) && velocity.y >= 0.0f)
 	{
-		velocity.y = 0.0f; 
-		playerHitbox.FixPositionBottom(player, tile);
+		if (!playerHitbox.FixPositionLeftRight(player, tile))
+		{
+			playerHitbox.FixPositionBottom(player, tile);
+			velocity.y = 0.0f;
+		}
 
 		// Turning off auto jump using if statement
 		if (!Keyboard::isKeyPressed(Keyboard::Space)) can_jump = true;
 	}
 	else
 	{
-		if (velocity.y < 3) velocity.y += gravity;
-		else velocity.y = 3.0f;
+		if (velocity.y < max_velocity_y) velocity.y += gravity;
+		else velocity.y = max_velocity_y;
 	}
 }
 
@@ -126,7 +132,7 @@ void Player::DisplayAnimations(double dt)
 void Player::Render(RenderWindow* window, double dt, bool console)
 {
 	HandleInputs(dt);
-	PlayerFall();
+	CollisionAndFall();
 	DisplayAnimations(dt);
 	TempFunc(window);
 
@@ -177,7 +183,6 @@ void Player::TempFunc(RenderWindow *window)
 		window->draw(tile);
 	}
 	*/
-
 
 	window->draw(tile);
 }

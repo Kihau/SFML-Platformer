@@ -18,9 +18,10 @@ I'm trying to make simple SFML platformer game in C++
 	- [x] Make (Majo2k) and add jumping animation
 - [x] Make and add program icon and change window title
 	- [x] Fix icon
+	- [ ] Add icon for executables
 - [x] Add and make collision detection class 
 	- [x] Fix hitboxes
-	- [ ] Fix collision detection
+	- [x] Fix collision detection
 	- [ ] Add map class and map tile
 - [ ] ~~Make class player get inputs from game class~~
 - [ ] Make program read and initilialize configuration from config file

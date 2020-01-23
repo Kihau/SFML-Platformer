@@ -21,8 +21,10 @@ public:
 
 	bool FixPositionBottom(Sprite& sprite1, Sprite& sprite2);
 	bool FixPositionTop(Sprite& sprite1, Sprite& sprite2);
-	bool FixPositionRight(Sprite& sprite1, Sprite& sprite2);
-	bool FixPositionLeft(Sprite& sprite1, Sprite& sprite2);
+	bool FixPositionLeftRight(Sprite& sprite1, Sprite& sprite2);
+	
+	bool CollisionRight(Sprite& sprite1, Sprite& sprite2);
+	bool CollisionLeft(Sprite& sprite1, Sprite& sprite2);
 
 	void ShowHitbox(RenderWindow* window);
 	static void ShowHitbox(RenderWindow* window, Sprite& sprite, Color color = Color::Red);

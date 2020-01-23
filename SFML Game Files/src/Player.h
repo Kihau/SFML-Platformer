@@ -29,10 +29,14 @@ private:
 	Vector2u player_scale;
 
 	Vector2f velocity;
+	float max_velocity_y = 2.0f;
+
 	const float movement_speed = 0.4f;
 	const float jump_speed = 1.5f;
+
 	const float max_jump_height = 200.0f;
 	float jump_height{};
+
 	const float gravity = 0.001f;
 
 	bool faceRight = true;
@@ -42,7 +46,7 @@ private:
 	// Class funtions
 	void HandleInputs(double dt);
 	void DisplayAnimations(double dt);
-	void PlayerFall();
+	void CollisionAndFall();
 
 	// Delete later
 	void TempFunc(RenderWindow* window);
