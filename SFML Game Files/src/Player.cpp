@@ -94,11 +94,17 @@ void Player::PlayerFall()
 {
 	playerHitbox.UpdateHitbox(player);
 
+	if (playerHitbox.CheckCollision(tile))
+	{
+		if (playerHitbox.FixPositionTop(player, tile))
+			velocity.y = 0.0f;
+	}
+
 	// Checking if player can fall
 	if (playerHitbox.CheckCollision(tile) && velocity.y >= 0.0f)
 	{
 		velocity.y = 0.0f; 
-		//playerHitbox.FixPosition(player, tile);
+		playerHitbox.FixPositionBottom(player, tile);
 
 		// Turning off auto jump using if statement
 		if (!Keyboard::isKeyPressed(Keyboard::Space)) can_jump = true;
@@ -191,6 +197,7 @@ void Player::Console()
 	cout << "Player velocity y: " << velocity.y << endl;
 
 	playerHitbox.UpdateConsole();
+	playerHitbox.UpdateConsoleCollision(tile);
 
 	cout << "\nTile left: " << tile.getGlobalBounds().left << endl;
 	cout << "Tile top: " << tile.getGlobalBounds().top << endl;

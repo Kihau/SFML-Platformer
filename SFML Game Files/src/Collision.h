@@ -19,12 +19,17 @@ public:
 	bool CheckCollision(Collision& coll);
 	bool CheckCollision(Sprite& sprite);
 
-	void FixPosition(Sprite& sprite, Collision& coll);
-	void FixPosition(Sprite& sprite1, Sprite& sprite2);
+	bool FixPositionBottom(Sprite& sprite1, Sprite& sprite2);
+	bool FixPositionTop(Sprite& sprite1, Sprite& sprite2);
+	bool FixPositionRight(Sprite& sprite1, Sprite& sprite2);
+	bool FixPositionLeft(Sprite& sprite1, Sprite& sprite2);
 
 	void ShowHitbox(RenderWindow* window);
 	static void ShowHitbox(RenderWindow* window, Sprite& sprite, Color color = Color::Red);
+
 	void UpdateConsole();
+	void UpdateConsoleCollision(Sprite& sprite);
+	void UpdateConsoleCollision(Collision& coll);
 };
 
 

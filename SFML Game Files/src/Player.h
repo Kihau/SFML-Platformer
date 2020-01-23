@@ -33,7 +33,7 @@ private:
 	const float jump_speed = 1.5f;
 	const float max_jump_height = 200.0f;
 	float jump_height{};
-	const float gravity = 0.01f;
+	const float gravity = 0.001f;
 
 	bool faceRight = true;
 	bool can_jump = true;
